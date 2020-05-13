@@ -44,13 +44,13 @@ def form_edit_get(biostat_id):
 @app.route('/edit/<int:biostat_id>', methods=['POST'])
 def form_update_post(biostat_id):
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('YourName'), request.form.get('Sex'), request.form.get('Age'),
-                 request.form.get('Height_in'), request.form.get('Weight_lbs'), biostat_id)
-    sql_update_query = """UPDATE biostats t SET t.YourName = %s, t.Sex = %s, t.Age = %s, t.Heignt_in = 
-    %s, t.Weight_lbs = %s, WHERE t.id = %s """
+    inputData = (request.form.get('YourName'), request.form.get('YourSex'), request.form.get('YourAge'),
+                 request.form.get('YourHeight'), request.form.get('YourWeight'), biostat_id)
+    sql_update_query = """UPDATE biostats t SET t.YourName = %s, t.Sex = %s, t.Age = %s, t.Height_in = %s, t.Weight_lbs = %s WHERE t.id = %s """
     cursor.execute(sql_update_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
+
 
 @app.route('/biostats/new', methods=['GET'])
 def form_insert_get():
@@ -62,7 +62,7 @@ def form_insert_post():
     cursor = mysql.get_db().cursor()
     inputData = (request.form.get('YourName'), request.form.get('Sex'), request.form.get('Age'),
                  request.form.get('Height_in'), request.form.get('Weight_lbs'))
-    sql_insert_query = """INSERT INTO biostats (YourName,Sex,Age,Height_in,Weight_lbs) VALUES (%s, %s,%s, %s,%s) """
+    sql_insert_query = """INSERT INTO biostats (YourName,Sex,Age,Height_in,Weight_lbs) VALUES (%s, %s, %s, %s, %s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
